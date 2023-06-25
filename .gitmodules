@@ -1,0 +1,6 @@
+[submodule "MathTools"]
+	path = MathTools
+	url = https://github.com/Calebsakhtar/MathTools.git
+[submodule "RK4"]
+	path = RK4
+	url = https://github.com/Calebsakhtar/RK4.git
