@@ -36,21 +36,36 @@ namespace DetSATools {
 	}
 
 	double compute_gradient_G(const double p_atm_Pa, const double EI_H20,
-		const double Q_fuel_MJperkg, const double eta_ov) {
+		const double Q_fuel_MJPerkg, const double eta_ov) {
 		// Calculates the gradient "G" (in units of Pa/K) from the Schmidt-Appleman criterion.
 		// This implements Equation 11 from Schumann 2012.
 		// 
 		// The inputs are as follows
 		//	- p_atm_Pa is the atmospheric Pressure in Pascals
 		//	- EI_H20 is the H20 missions index of the fuel
-		//	- Q_fuel_MJperkg is the fuel LCV in MJ/kg
+		//	- Q_fuel_MJPerkg is the fuel LCV in MJ/kg
 		//	- eta_ov is the overall efficiency of the aircraft
 		
-		const double Q_fuel_Jperkg = Q_fuel_MJperkg * 1e6;
-		const double cp_air_JperkgK = 1004; // From Schumann 2012
+		const double Q_fuel_JPerkg = Q_fuel_MJPerkg * 1e6;
+		const double cp_air_JPerkgK = 1004; // From Schumann 2012
 		const double M_ratio = 0.622; // From Schumann 2012
 
-		return cp_air_JperkgK * p_atm_Pa * EI_H20 / 
-			M_ratio / Q_fuel_Jperkg / (1 - eta_ov);
+		return cp_air_JPerkgK * p_atm_Pa * EI_H20 / 
+			M_ratio / Q_fuel_JPerkg / (1 - eta_ov);
+	}
+
+	double approximate_T_LM_C(const double G_PaPerK) {
+		// Calculates the tangent temperature "T_LM" (in degrees Celsius) from the Schmidt-Appleman criterion.
+		// This implements Equation 10 from Schumann 2012.
+		// 
+		// The inputs are as follows
+		//	- G_PaPerK is the gradient in units of Pa/Kg
+
+		const double a = -46.46;
+		const double b = 9.43;
+		const double c = -0.053;
+		const double d = 0.72;
+
+		return a + b * log(G_PaPerK + c) + d * pow(log(G_PaPerK + c), 2);
 	}
 }
