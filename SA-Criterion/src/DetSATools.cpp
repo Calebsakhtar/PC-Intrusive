@@ -38,13 +38,19 @@ namespace DetSATools {
 	double compute_gradient_G(const double p_atm_Pa, const double EI_H20,
 		const double Q_fuel_MJperkg, const double eta_ov) {
 		// Calculates the gradient "G" (in units of Pa/K) from the Schmidt-Appleman criterion.
-		// The equation can be found in Schumann 2012.
+		// This implements Equation 11 from Schumann 2012.
 		// 
 		// The inputs are as follows
 		//	- p_atm_Pa is the atmospheric Pressure in Pascals
 		//	- EI_H20 is the H20 missions index of the fuel
 		//	- Q_fuel_MJperkg is the fuel LCV in MJ/kg
 		//	- eta_ov is the overall efficiency of the aircraft
-		return 0;
+		
+		const double Q_fuel_Jperkg = Q_fuel_MJperkg * 1e6;
+		const double cp_air_JperkgK = 1004; // From Schumann 2012
+		const double M_ratio = 0.622; // From Schumann 2012
+
+		return cp_air_JperkgK * p_atm_Pa * EI_H20 / 
+			M_ratio / Q_fuel_Jperkg / (1 - eta_ov);
 	}
 }
