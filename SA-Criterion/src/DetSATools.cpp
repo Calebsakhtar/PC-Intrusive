@@ -1,5 +1,5 @@
 #include <math.h>
-#include "../headers/SATools.h"
+#include "../headers/DetSATools.h"
 
 namespace SATools {
 
