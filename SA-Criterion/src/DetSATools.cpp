@@ -35,8 +35,8 @@ namespace DetSATools {
 		return 100 * exp(a / T_K + b + c * T_K + d * T_K * T_K + e * log(T_K));
 	}
 
-	double compute_gradient_G(const double p_atm_Pa, const double EI_H20,
-		const double Q_fuel_MJPerkg, const double eta_ov) {
+	double compute_gradient_G(const double p_atm_Pa, const double EI_H20, const double Q_fuel_MJPerkg,
+		const double eta_ov) {
 		// Calculates the gradient "G" (in units of Pa/K) from the Schmidt-Appleman criterion.
 		// This implements Equation 11 from Schumann 2012.
 		// 
@@ -67,5 +67,17 @@ namespace DetSATools {
 		const double d = 0.72;
 
 		return a + b * log(G_PaPerK + c) + d * pow(log(G_PaPerK + c), 2);
+	}
+
+	double compute_U_LC(const double G_PaPerK, const double T_LM_C,	const double T_atm_C) {
+		// Calculates the critical relative humidity "U_LC" from the Schmidt-Appleman criterion.
+		// This implements Equation 12 from Schumann 2012.
+		// 
+		// The inputs are as follows
+		//	- G_PaPerK is the gradient in units of Pa/Kg
+		//  - T_LM_C is the tangent temperature in degrees celsius
+		//  - T_atm_C is the atmospheric temperature in degrees celsius
+
+		return (G_PaPerK * (T_atm_C - T_LM_C) + compute_p_sat_liq(T_LM_C - 273)) / compute_p_sat_liq(T_atm_C - 273);
 	}
 }
