@@ -2,10 +2,23 @@
 //
 
 #include <iostream>
+#include "headers/DetSATools.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	// At 25000 ft
+	const double T_atm_C = -34.53;
+	const double p_atm_Pa = 37601;
+	const double EI_H20 = 1.23;
+	const double Q_fuel_MJPerkg = 43.2;
+	const double eta_ov = 0.25;
+	
+	const double G_PaPerK = DetSATools::compute_gradient_G(p_atm_Pa, EI_H20, Q_fuel_MJPerkg,
+		eta_ov);
+	const double T_LM_C = DetSATools::approximate_T_LM_C(G_PaPerK);
+	const double U_LC = DetSATools::compute_U_LC(G_PaPerK, T_LM_C, T_atm_C);
+
+	std::cout << U_LC;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

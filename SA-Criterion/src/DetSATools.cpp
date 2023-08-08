@@ -78,6 +78,8 @@ namespace DetSATools {
 		//  - T_LM_C is the tangent temperature in degrees celsius
 		//  - T_atm_C is the atmospheric temperature in degrees celsius
 
-		return (G_PaPerK * (T_atm_C - T_LM_C) + compute_p_sat_liq(T_LM_C - 273)) / compute_p_sat_liq(T_atm_C - 273);
+		const double p_sat_liq_LM = compute_p_sat_liq(T_LM_C + 273);
+		const double p_sat_liq_atm = compute_p_sat_liq(T_atm_C + 273);
+		return (G_PaPerK * (T_atm_C - T_LM_C) + p_sat_liq_LM) / p_sat_liq_atm;
 	}
 }
