@@ -6,9 +6,9 @@
 
 int main()
 {
-	// At 25000 ft
-	const double T_atm_C = -34.53;
-	const double p_atm_Pa = 37601;
+	// At 23500 ft
+	const double T_atm_C = -31.558;
+	const double p_atm_Pa = 40128;
 	const double EI_H20 = 1.23;
 	const double Q_fuel_MJPerkg = 43.2;
 	const double eta_ov = 0.25;
@@ -19,6 +19,7 @@ int main()
 	const double U_LC = DetSATools::compute_U_LC(G_PaPerK, T_LM_C, T_atm_C);
 
 	std::cout << U_LC;
+	//.894369
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
